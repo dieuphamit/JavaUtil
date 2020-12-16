@@ -24,8 +24,9 @@ public class TextUtil {
      */
     public static String capitalize(String str) {
 
-        if (str.length() == 0)
+        if (str.length() == 0) {
             return str;
+        }
 
         String[] splited = str.trim().split("\\s+");
         List<String> list = Arrays.asList(splited);
@@ -44,10 +45,26 @@ public class TextUtil {
      */
     public static String repeat(String str) {
 
-        if (str.length() == 0)
-            return str;
+        int length = str.length();
+        if (length == 0) {
+            return StringUtils.EMPTY;
+        }
+        String result = StringUtils.EMPTY;
+        boolean isDone = false;
+        for (int i = 0; i < length; i++) {
+            for (int j = i + 1; j < length; j++) {
+                if (StringUtils.equalsIgnoreCase(String.valueOf(str.charAt(i)), String.valueOf(str.charAt(j)))) {
+                    result = String.valueOf(str.charAt(j));
+                    isDone = true;
+                    break;
+                }
+            }
+            if (isDone) {
+                break;
+            }
+        }
 
-        return "";
+        return result;
     }
 
     /**
@@ -60,10 +77,27 @@ public class TextUtil {
      */
     public static String findMaxString(String str) {
 
-        if (str.length() == 0)
-            return str;
+        if (str.length() == 0) {
+            return StringUtils.EMPTY;
+        }
 
-        return "";
+        String[] splited = str.trim().split("\\s+");
+        List<String> list = Arrays.asList(splited);
+
+        String result = list.get(0);
+        int count = 0;
+        for (int i = 1, length = list.size(); i < length; i++) {
+            if (list.get(i).length() > result.length()) {
+                result = list.get(i);
+            } else if (list.get(i).length() == result.length()) {
+                count++;
+            }
+        }
+        if (count == list.size() - 1) {
+            result = StringUtils.EMPTY;
+        }
+
+        return result;
     }
 
 }
